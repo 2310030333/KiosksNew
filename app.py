@@ -15,7 +15,7 @@ users_collection = db['users']
 
 # Twilio setup (replace with your credentials)
 twilio_sid = "AC3017e59dc2b145329fb97e4f1c3fa2ec"
-twilio_auth_token = "b65e093f84a3d44af166fb37e0fd32c7"
+twilio_auth_token = "2e5a322d58062720a3ffdb709e24dd76"
 twilio_number = "+17756183067"
 your_phone_number = "+919106954439"
 
