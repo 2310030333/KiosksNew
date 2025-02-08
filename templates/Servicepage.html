@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Dispensing</title>
+    <link rel="icon" href=
+"plusymbol.png"
+          type="image/x-icon">
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+    background-size: cover;
+    background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #background-container {
+            background-color: #3498db; /* Blue background color */
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+
+        #kiosk-container {
+            background-color: #6cd9cb;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+            margin-top: 20px;
+            position: fixed;
+            z-index: 2;
+            top: 110px;
+        }
+
+        h1 {
+            color: #fff;
+            margin: 0; 
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #a5e5de;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #868686;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+
+<div id="background-container"></div>
+<div id="kiosk-container">
+<h1> {{array[0]}}</h1>
+<h1> {{array[1]}}</h1>
+</div>
+</body>
+</html>

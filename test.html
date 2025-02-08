@@ -1,0 +1,142 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>WebRTC Video Call - Local Host</title> 
+    <style> 
+        video { 
+            width: 45%; 
+            margin: 10px; 
+        } 
+        #localVideo, #remoteVideo { 
+            border: 2px solid black; 
+        } 
+        textarea { 
+            width: 100%; 
+            height: 100px; 
+            margin: 10px 0; 
+        } 
+    </style> 
+</head> 
+<body> 
+    <h1>WebRTC Video Call - Host and Guest</h1> 
+    <video id="localVideo" autoplay playsinline muted></video> 
+    <video id="remoteVideo" autoplay playsinline></video> 
+ 
+    <h2>Manual Signaling</h2> 
+    <textarea id="offer" placeholder="SDP Offer"></textarea> 
+    <button id="createOffer">Create Offer</button> 
+    <button id="setOffer">Set Remote Offer</button> 
+ 
+    <textarea id="answer" placeholder="SDP Answer"></textarea> 
+    <button id="createAnswer">Create Answer</button> 
+    <button id="setAnswer">Set Remote Answer</button> 
+ 
+    <textarea id="iceCandidate" placeholder="ICE Candidates"></textarea> 
+    <button id="addCandidate">Add ICE Candidate</button> 
+ 
+    <script> 
+        let localStream; 
+        let remoteStream; 
+        let peerConnection; 
+        const servers = { 
+            iceServers: [ 
+                { urls: 'stun:stun.l.google.com:19302' }, 
+                { urls: 'stun:stun1.l.google.com:19302' } 
+            ] 
+        }; 
+ 
+        const localVideo = document.getElementById('localVideo'); 
+        const remoteVideo = document.getElementById('remoteVideo'); 
+        const offerTextArea = document.getElementById('offer'); 
+        const answerTextArea = document.getElementById('answer'); 
+        const iceCandidateTextArea = document.getElementById('iceCandidate'); 
+ 
+        // Initialize local media stream 
+        async function initLocalStream() { 
+            try { 
+                localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }); 
+                localVideo.srcObject = localStream; 
+            } catch (error) { 
+                console.error('Error accessing media devices:', error); 
+            } 
+        } 
+ 
+        // Create a new peer connection and set up event listeners 
+        function createPeerConnection() { 
+            peerConnection = new RTCPeerConnection(servers); 
+ 
+            // Add local tracks (video and audio) to the peer connection 
+            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream)); 
+ 
+            // Listen for remote tracks (video/audio) from the other peer 
+            peerConnection.addEventListener('track', event => { 
+                if (!remoteStream) { 
+                    remoteStream = new MediaStream(); 
+                    remoteVideo.srcObject = remoteStream; 
+                } 
+                remoteStream.addTrack(event.track); 
+            }); 
+ 
+            // Listen for new ICE candidates and display them for manual sharing 
+            peerConnection.onicecandidate = event => { 
+                if (event.candidate) { 
+                    iceCandidateTextArea.value = JSON.stringify(event.candidate); 
+                } 
+            }; 
+        } 
+ 
+        // Create SDP offer for the local host 
+        async function createOffer() { 
+            createPeerConnection(); 
+            const offer = await peerConnection.createOffer(); 
+            await peerConnection.setLocalDescription(offer); 
+            offerTextArea.value = JSON.stringify(peerConnection.localDescription); 
+        } 
+ 
+        // Create SDP answer for the guest client 
+        async function createAnswer() { 
+            const offer = JSON.parse(offerTextArea.value); 
+            createPeerConnection(); 
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(offer)); 
+ 
+            const answer = await peerConnection.createAnswer(); 
+            await peerConnection.setLocalDescription(answer); 
+            answerTextArea.value = JSON.stringify(peerConnection.localDescription); 
+        } 
+ 
+        // Set remote offer (for guest) 
+        async function setOffer() { 
+            const offer = JSON.parse(offerTextArea.value); 
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(offer)); 
+        } 
+ 
+        // Set remote answer (for host) 
+        async function setAnswer() { 
+            const answer = JSON.parse(answerTextArea.value); 
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(answer)); 
+        } 
+ 
+        // Add ICE candidate manually 
+        async function addCandidate() { 
+            const candidate = JSON.parse(iceCandidateTextArea.value); 
+            try { 
+                await peerConnection.addIceCandidate(new RTCIceCandidate(candidate)); 
+            } catch (error) { 
+                console.error('Error adding ICE candidate:', error); 
+            } 
+        } 
+ 
+        // Set up event listeners 
+        document.getElementById('createOffer').addEventListener('click', createOffer); 
+        document.getElementById('createAnswer').addEventListener('click', createAnswer); 
+        document.getElementById('setOffer').addEventListener('click', setOffer); 
+        document.getElementById('setAnswer').addEventListener('click', setAnswer); 
+        document.getElementById('addCandidate').addEventListener('click', addCandidate); 
+ 
+        // Initialize the local video stream when the page loads 
+        window.onload = initLocalStream; 
+    </script> 
+</body> 
+</html>

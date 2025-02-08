@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Healthcare Kiosk</title>
+    <style>
+        /* Your existing styles go here */
+    </style>
+</head>
+
+<body>
+
+    <div id="background-container"></div>
+    <div id="kiosk-container">
+        <form action="#" method="post">
+            <h2 style="color:#0063a0;">Basic Medication Dispensing</h2>
+            <label style="color:#0063a0;" for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label style="color:#0063a0;" for="gender">Allergies: </label>
+            <select id="allergy" name="allergy" onchange="toggleOtherTextbox()" required>
+                <option value="Penicillin">Penicillin</option>
+                <option value="Anaphylaxis">Anaphylaxis</option>
+                <option value="Anticonvulsants">Anticonvulsants</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <div id="otherAllergyContainer" style="display: none;">
+                <label style="color:#0063a0;" for="otherAllergy">Specify Other Allergy: </label>
+                <input type="text" id="otherAllergy" name="otherAllergy">
+            </div>
+
+            <label style="color:#0063a0;" for="gender">Select Medication </label>
+            <select id="medication" name="medication" required>
+                <option value="med4">Advil</option>
+                <option value="med3">Ibuprofen</option>
+                <option value="med2"> Antiseptic Cream </option>
+                <option value="med1">Paracetamol</option>
+            </select>
+
+            <label style="color:#0063a0;" for="quantity">Select Quantity: </label>
+            <input type="number" id="quantity" name="quantity" required>
+            <button type="submit">Submit</button>
+            <a href="thankyoupage.html">
+                <button style="color: #ffffff;">
+                    Continue
+                </button>
+            </a>
+        </form>
+    </div>
+
+    <script>
+        function toggleOtherTextbox() {
+            var allergyDropdown = document.getElementById("allergy");
+            var otherAllergyContainer = document.getElementById("otherAllergyContainer");
+            var otherAllergyTextbox = document.getElementById("otherAllergy");
+
+            if (allergyDropdown.value === "Other") {
+                otherAllergyContainer.style.display = "block";
+                otherAllergyTextbox.required = true;
+            } else {
+                otherAllergyContainer.style.display = "none";
+                otherAllergyTextbox.required = false;
+            }
+        }
+    </script>
+</body>
+
+</html>

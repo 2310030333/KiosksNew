@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='plusymbol.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>My Profile</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .profile-container {
+            background-color: #c4ebe7;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #6cd9cb;
+            color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #868686;
+            color: white;
+        }
+
+        .logout {
+            display: block;
+            margin-top: 20px;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .logout:hover {
+            text-decoration: underline;
+        }
+
+        /* Language selector styles */
+        #languageSelector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Selector Dropdown -->
+    <select id="languageSelector">
+        <option value="en">English</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="hi">हिंदी (Hindi)</option>
+    </select>
+
+    <div class="profile-container">
+        <h1 id="welcomeMessage" style="color:#0063a0;">Welcome, {{username}}!</h1>
+        <div class="buttons-container">
+            <a href="{{ url_for('Serv') }}" class="button" style="color:#0063a0;">New Service</a>
+            <a href="{{ url_for('prevServ') }}" class="button" style="color:#0063a0;">Previous Services</a>
+            <a href="{{ url_for('faq') }}" class="button" style="color:#0063a0;">FAQ</a>
+        </div>
+        <a href="{{ url_for('login3') }}" class="logout" style="color:#0063a0;">Logout</a>
+    </div>
+
+    <script>
+        const languageSelector = document.getElementById('languageSelector');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+
+        languageSelector.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+
+            if (selectedLanguage === 'en') {
+                welcomeMessage.textContent = 'Welcome, [Username]!';
+            } else if (selectedLanguage === 'te') {
+                welcomeMessage.textContent = 'స్వాగతం, [Username]!';
+            } else if (selectedLanguage === 'hi') {
+                welcomeMessage.textContent = 'स्वागत है, [Username]!';
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHealth Kiosk</title>
+    <link rel="icon" href="{{ url_for('static', filename='plusymbol.png') }}" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{{ url_for('static', filename='background1.jpg') }}"), 
+                              linear-gradient(135deg, rgba(0, 180, 216, 0) 0%, rgba(0, 99, 160, 0.7) 100%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            color: #fff;
+            transition: background 0.5s ease-in-out;
+        }
+
+        #languageSelector {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            font-size: 1.2em;
+            padding: 5px;
+            background-color: #fff;
+            border: none;
+            color: #0063a0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            z-index: 10;
+        }
+
+        #languageSelector:hover {
+            background-color: #0063a0;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .content {
+            text-align: center;
+            position: relative;
+            top: 50px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+            animation: slideUp 1.5s ease-out;
+        }
+
+        .button-container {
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        button {
+            background-color: #01C5A2;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.5em;
+            border-radius: 5px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #016F4D;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            button {
+                padding: 12px 25px;
+                font-size: 1.2em;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <select id="languageSelector">
+        <option value="en">English</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="hi">हिंदी (Hindi)</option>
+    </select>
+
+    <div class="content">
+        <h1 id="registered-users" style="color: #0063a0;" >FOR REGISTERED USERS,</h1>
+        <h1 id="new-users" style="color: #0063a0;" >FOR NEW USERS,</h1>
+
+        <div class="button-container">
+            <a href="{{ url_for('login3') }}">
+                <button id="button1">CONTINUE</button>
+            </a>
+            <a href="{{ url_for('register') }}">
+                <button id="button2">REGISTER</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const languageSelector = document.getElementById('languageSelector');
+        const registeredUsersText = document.getElementById('registered-users');
+        const newUsersText = document.getElementById('new-users');
+        const button1Text = document.getElementById('button1');
+        const button2Text = document.getElementById('button2');
+
+        languageSelector.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+
+            if (selectedLanguage === 'en') {
+                registeredUsersText.textContent = 'FOR REGISTERED USERS,';
+                newUsersText.textContent = 'FOR NEW USERS,';
+                button1Text.textContent = 'CONTINUE';
+                button2Text.textContent = 'REGISTER';
+            } else if (selectedLanguage === 'te') {
+                registeredUsersText.textContent = 'నమోదైన వినియోగదారుల కోసం,';
+                newUsersText.textContent = 'కొత్త వినియోగదారుల కోసం,';
+                button1Text.textContent = 'కొనసాగించు';
+                button2Text.textContent = 'నమోదు';
+            } else if (selectedLanguage === 'hi') {
+                registeredUsersText.textContent = 'पंजीकृत उपयोगकर्ताओं के लिए,';
+                newUsersText.textContent = 'नए उपयोगकर्ताओं के लिए,';
+                button1Text.textContent = 'जारी रखें';
+                button2Text.textContent = 'रजिस्टर करें';
+            }
+        });
+    </script>
+</body>
+</html>

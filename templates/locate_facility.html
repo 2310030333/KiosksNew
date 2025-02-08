@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locate Nearest Medical Facility</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{{ url_for('static', filename='background1.jpg') }}"), linear-gradient(135deg, rgba(0, 180, 216, 0) 0%, rgba(0, 99, 160, 0.7) 100%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            color: #fff;
+            transition: background 0.5s ease-in-out;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #menucolor {
+            background-color: #0063a0;
+            width: 100%;
+            height: auto;
+            position: sticky;
+            top: 0;
+            padding: 35px 10px;
+            text-align: center;
+            margin-top: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button {
+            background-color: #01C5A2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #016F4D;
+            transform: translateY(-3px);
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2em;
+            }
+
+            button {
+                padding: 12px 25px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5em;
+            }
+
+            button {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="menucolor">
+        <h2>Locate Nearest Medical Facility</h2>
+    </div>
+
+    <button onclick="findNearestFacility()">Find Nearest Facility</button>
+    <p id="result"></p>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <script>
+        let map, userLocation;
+
+        function initMap() {
+            map = L.map('map').setView([51.505, -0.09], 13); // Default location (London)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+        }
+
+        function findNearestFacility() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    userLocation = [position.coords.latitude, position.coords.longitude];
+                    map.setView(userLocation, 13);
+                    getNearbyFacilities();
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function getNearbyFacilities() {
+            const lat = userLocation[0];
+            const lon = userLocation[1];
+
+            // Replace with your Geoapify API key
+            const apiKey = '906ddcf8d4d54075b7bb158afc42059e';
+
+            const geoapifyUrl = `https://api.geoapify.com/v2/places?categories=healthcare&bias=proximity:${lon},${lat}&limit=5&apiKey=${apiKey}`;
+
+            fetch(geoapifyUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.features.length > 0) {
+                        const nearestFacility = data.features[0];
+                        const name = nearestFacility.properties.name || "Unnamed Facility";
+                        const address = nearestFacility.properties.formatted || "Address not available";
+
+                        document.getElementById("result").innerHTML =
+                            `Nearest Facility: <b>${name}</b><br>Address: ${address}`;
+
+                        const facilityLat = nearestFacility.geometry.coordinates[1];
+                        const facilityLon = nearestFacility.geometry.coordinates[0];
+
+                        L.marker([facilityLat, facilityLon]).addTo(map)
+                            .bindPopup(name)
+                            .openPopup();
+                    } else {
+                        document.getElementById("result").innerText = "No nearby facilities found.";
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("result").innerText = "Error fetching data.";
+                    console.error(error);
+                });
+        }
+
+        // Initialize map
+        initMap();
+    </script>
+</body>
+</html>

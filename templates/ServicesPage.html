@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .service-container {
+            background-color: #c4ebe7;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px 0 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #6cd9cb;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #868686;
+            color: white;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .language-selector select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>New Service</title>
+    <link rel="icon" href="plusymbol.png" type="image/x-icon">
+</head>
+<body>
+    <div class="language-selector">
+        <label for="language">Language:</label>
+        <select id="language" name="language">
+            <option value="english">English</option>
+            <option value="telugu">Telugu</option>
+            <option value="hindi">Hindi</option>
+        </select>
+    </div>
+    <div class="service-container">
+        <h2 style="color:#0063a0;">New Service</h2>
+        <form id="newServiceForm" method="POST">
+            <label for="serviceName" style="color:#0063a0;">Service Name:</label>
+            <select id="service-name" name="service-name" required>
+                <option value="service1">Locate Medical Facility</option>
+                <option value="service2">Self-Diagnostic Kits</option>
+                <option value="service4">Basic Medication Dispensing</option>
+                <option value="service4">Basic Diagonistics</option>
+                <option value="service5">Web-Consultation</option>
+                <option value="service6">Awareness</option>
+            </select>
+
+            <label for="serviceDate" style="color:#0063a0;">Service Date:</label>
+            <input type="date" id="serviceDate" name="serviceDate" required>
+
+            <!-- Dynamic link for submission -->
+            <a id="submit-link" href="{{ url_for('newServ') }}">Submit</a>
+        </form type="submit">
+        <a href="Profilepage.html" class="back-link">Back to Profile</a>
+    </div>
+
+    <script>
+        // Assign the rendered URLs to variables
+        const webConsultUrl = "{{ url_for('webconsult') }}";
+        const locateFacilityUrl = "{{ url_for('locate_facility') }}";
+        const awarenessUrl = "{{ url_for('awareness') }}";
+        const newServUrl = "{{ url_for('newServ') }}";
+        
+        // Get the service dropdown and submit link
+        const serviceSelect = document.getElementById("service-name");
+        const submitLink = document.getElementById("submit-link");
+        
+        // Add event listener to change the submit link based on the selected service
+        serviceSelect.addEventListener("change", function() {
+            if (serviceSelect.value === "service5") {
+                // If Web-Consultation is selected, change the href to the 'webconsult' URL
+                submitLink.href = webConsultUrl;
+            } else if (serviceSelect.value === "service1") {
+                // If Locate Medical Facility is selected, change the href to the 'locate_facility' URL
+                submitLink.href = locateFacilityUrl;
+            } else if (serviceSelect.value === "service6") {
+                submitLink.href = awarenessUrl;
+            } else {
+                // For other services, keep the default href as the 'newServ' URL
+                submitLink.href = newServUrl;
+            }
+        });
+        </script>
+        
+</body>
+</html>

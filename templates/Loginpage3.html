@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHealth Kiosk</title> 
+    <link rel="icon" href="{{ url_for('static', filename='plusymbol.png') }}" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{{ url_for('static', filename='background1.jpg') }}"), linear-gradient(135deg, rgba(0, 180, 216, 0) 0%, rgba(0, 99, 160, 0.7) 100%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background-color: rgba(0, 99, 160, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 320px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        label {
+            margin-top: 10px;
+            color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border: none;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        button {
+            background-color: #01C5A2;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #016F4D;
+            transform: translateY(-3px);
+        }
+
+        #languageSelector {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 16px;
+            padding: 5px;
+            background: #fff;
+            color: #0063a0;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #languageSelector:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <select id="languageSelector">
+        <option value="en">English</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+    </select>
+
+    <div class="login-container">
+        <form class="login-form" action="{{ url_for('Profile') }}" method="POST">
+            <h2 id="login-title">Login</h2>
+            
+            <label for="username" id="username-label">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password" id="password-label">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit" id="login-button">Login</button>
+        </form>
+    </div>
+
+    <script>
+        const languageSelector = document.getElementById('languageSelector');
+        const loginTitle = document.getElementById('login-title');
+        const usernameLabel = document.getElementById('username-label');
+        const passwordLabel = document.getElementById('password-label');
+        const loginButton = document.getElementById('login-button');
+
+        languageSelector.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+
+            if (selectedLanguage === 'en') {
+                loginTitle.textContent = 'Login';
+                usernameLabel.textContent = 'Username:';
+                passwordLabel.textContent = 'Password:';
+                loginButton.textContent = 'Login';
+            } else if (selectedLanguage === 'te') {
+                loginTitle.textContent = 'లాగిన్';
+                usernameLabel.textContent = 'వినియోగదారు పేరు:';
+                passwordLabel.textContent = 'పాస్వర్డ్:';
+                loginButton.textContent = 'ప్రవేశించండి';
+            } else if (selectedLanguage === 'hi') {
+                loginTitle.textContent = 'लॉगिन';
+                usernameLabel.textContent = 'उपयोगक्रता नाम:';
+                passwordLabel.textContent = 'पासवर्ड:';
+                loginButton.textContent = 'लॉगिन करें';
+            }
+        });
+    </script>
+</body>
+</html>

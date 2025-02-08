@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='plusymbol.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>New Service</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .service-container {
+            background-color: #c4ebe7;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px 0 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #6cd9cb;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #868686;
+            color: white;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Language selector styles */
+        #languageSelector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Selector Dropdown -->
+    <select id="languageSelector">
+        <option value="en">English</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="hi">हिंदी (Hindi)</option>
+    </select>
+
+    <div class="service-container">
+        <h2 style="color:#0063a0;">New Service</h2>
+        <form id="newServiceForm">
+            <label for="serviceName" style="color:#0063a0;">Service Name:</label>
+            <select id="service-name" name="service-name" required>
+                <option value="service1">Locate Medical Facility</option>
+                <option value="service2">Self-Diagnostic Kits</option>
+                <option value="service3">Medicines Delivery</option>
+                <option value="service4">Basic Medication Dispensing</option>
+                <option value="service5">Web-Consultation</option>
+                <option value="service6">Awareness</option>
+            </select>
+
+            <label for="serviceDate" style="color:#0063a0;">Service Date:</label>
+            <input type="date" id="serviceDate" name="serviceDate" required>
+
+            <button type="submit">Submit</button>
+        </form>
+        <a href="{{ url_for('Profile') }}" class="back-link">Back to Profile</a>
+    </div>
+
+    <script>
+        const languageSelector = document.getElementById('languageSelector');
+        const serviceNameLabel = document.querySelector('label[for="serviceName"]');
+        const serviceDateLabel = document.querySelector('label[for="serviceDate"]');
+        const submitButton = document.querySelector('button[type="submit"]');
+
+        languageSelector.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+
+            if (selectedLanguage === 'en') {
+                serviceNameLabel.textContent = 'Service Name:';
+                serviceDateLabel.textContent = 'Service Date:';
+                submitButton.textContent = 'Submit';
+            } else if (selectedLanguage === 'te') {
+                serviceNameLabel.textContent = 'సేవ పేరు:';
+                serviceDateLabel.textContent = 'సేవ తేదీ:';
+                submitButton.textContent = 'సమర్పించండి';
+            } else if (selectedLanguage === 'hi') {
+                serviceNameLabel.textContent = 'सेवा नाम:';
+                serviceDateLabel.textContent = 'सेवा की तारीख:';
+                submitButton.textContent = 'सबमिट करें';
+            }
+        });
+    </script>
+
+</body>
+</html>

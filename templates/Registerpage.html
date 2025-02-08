@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- Use Flask's url_for to load the favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='plusymbol.png') }}" type="image/x-icon">
+    <style>
+        body {
+            /* Use Flask's url_for to load the background image */
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #background-container {
+            background-color: #3498db; /* Blue background color */
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        #kiosk-container {
+            background-color: #6cd9cb;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+            margin-top: 20px;
+            position: fixed;
+            z-index: 2;
+            top: -10px;
+        }
+
+        h1 {
+            color: #fff;
+            margin: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #a5e5de;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #868686;
+            color: white;
+        }
+
+        #languageSelector {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: auto;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Selector Dropdown -->
+    <select id="languageSelector">
+        <option value="en">English</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="hi">हिंदी (Hindi)</option>
+    </select>
+
+    <div id="background-container"></div>
+    <div id="kiosk-container">
+        <form action="{{ url_for('submit')}}" method="post">
+            <label id="name-label" style="color:#0063a0;" for="name">Name:(Will also be your username)</label>
+            <input type="text" id="name" name="name" required>
+
+            <label id="age-label" style="color:#0063a0;" for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label id="gender-label" style="color:#0063a0;" for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label id="address-label" style="color:#0063a0;" for="address">Address</label>
+            <input type="text" id="address" name="address" required>
+
+            <label id="blood-type-label" style="color:#0063a0;" for="blood-type">Blood Type</label>
+            <input type="text" id="blood-type" name="blood-type" required>
+
+            <label id="id-proof-label" style="color:#0063a0;" for="id-proof">Select Government ID Proof:</label>
+            <select id="id-proof" name="id-proof" required>
+                <option value="Aadhaar">Aadhaar</option>
+                <option value="Voter ID">Voter ID</option>
+                <option value="Pan Card">Pan Card</option>
+                <option value="Ration Card">Ration Card</option>
+            </select>
+
+            <label id="govt-id-label" style="color:#0063a0;" for="govt-id">Government ID Number</label>
+            <input type="number" id="govt-id" name="govt-id" required>
+
+            <label id="password-label" style="color:#0063a0;" for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" id="submit-button">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const languageSelector = document.getElementById('languageSelector');
+        const nameLabel = document.getElementById('name-label');
+        const ageLabel = document.getElementById('age-label');
+        const genderLabel = document.getElementById('gender-label');
+        const addressLabel = document.getElementById('address-label');
+        const bloodTypeLabel = document.getElementById('blood-type-label');
+        const idProofLabel = document.getElementById('id-proof-label');
+        const govtIdLabel = document.getElementById('govt-id-label');
+        const passwordLabel = document.getElementById('password-label');
+        const submitButton = document.getElementById('submit-button');
+
+        languageSelector.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+
+            if (selectedLanguage === 'en') {
+                nameLabel.textContent = 'Name: (Will also be your username)';
+                ageLabel.textContent = 'Age:';
+                genderLabel.textContent = 'Gender:';
+                addressLabel.textContent = 'Address:';
+                bloodTypeLabel.textContent = 'Blood Type:';
+                idProofLabel.textContent = 'Select Government ID Proof:';
+                govtIdLabel.textContent = 'Government ID Number:';
+                passwordLabel.textContent = 'Password:';
+                submitButton.textContent = 'Submit';
+            } else if (selectedLanguage === 'te') {
+                nameLabel.textContent = 'పేరు: (మీ యూజర్‌ పేరు కూడా అవుతుంది)';
+                ageLabel.textContent = 'వయస్సు:';
+                genderLabel.textContent = 'లింగం:';
+                addressLabel.textContent = 'చిరునామా:';
+                bloodTypeLabel.textContent = 'రక్తపు గ్రూప్:';
+                idProofLabel.textContent = 'ప్రభుత్వ గుర్తింపు నిర్ధారణ ఎంచుకోండి:';
+                govtIdLabel.textContent = 'ప్రభుత్వ గుర్తింపు సంఖ్య:';
+                passwordLabel.textContent = 'పాస్‌వర్డ్:';
+                submitButton.textContent = 'సమర్పించండి';
+            } else if (selectedLanguage === 'hi') {
+                nameLabel.textContent = 'नाम: (यह आपका उपयोगकर्ता नाम भी होगा)';
+                ageLabel.textContent = 'आयु:';
+                genderLabel.textContent = 'लिंग:';
+                addressLabel.textContent = 'पता:';
+                bloodTypeLabel.textContent = 'रक्त समूह:';
+                idProofLabel.textContent = 'सरकारी पहचान प्रमाण चुनें:';
+                govtIdLabel.textContent = 'सरकारी पहचान संख्या:';
+                passwordLabel.textContent = 'पासवर्ड:';
+                submitButton.textContent = 'प्रस्तुत करें';
+            }
+        });
+    </script>
+
+</body>
+</html>

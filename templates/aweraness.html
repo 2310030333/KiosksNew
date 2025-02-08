@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Healthcare Education</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{{ url_for('static', filename='background1.jpg') }}"), linear-gradient(135deg, rgba(0, 180, 216, 0) 0%, rgba(0, 99, 160, 0.7) 100%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            color: #fff;
+            transition: background 0.5s ease-in-out;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header {
+            background: #0063a0;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color:black;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        #selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 0.9em;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>Basic Healthcare Education</header>
+    <select id="selector" style="color: black; position: absolute; top: 20px; right: 45px;">
+        <option value="en">English</option>
+        <option value="tu">తెలుగు</option>
+        <option value="hi">हिंदी</option>
+    </select>
+    <div class="container">
+        <h2 id="title">Understanding Healthcare Basics for a Healthy Life</h2>
+        <p id="description">Learn the essential healthcare practices to stay healthy and prevent common diseases.</p>
+        <div class="section">
+            <h3 id="hygiene-title">Importance of Hygiene</h3>
+            <p id="hygiene-desc">Good hygiene is critical for preventing the spread of infectious diseases and helping children lead long, healthy lives. It also prevents them from missing school, resulting in better learning outcomes.
+
+                For families, good hygiene means avoiding illness and spending less on health care. In some contexts, it can also secure a family’s social status and help individuals maintain self-confidence.
+                
+                Yet, important hygiene behaviours are difficult to practice without the right knowledge and skills, adequate community support and the belief that one’s own behaviour can actually make a difference.
+                
+                Many children around the world live in conditions that make it difficult to maintain good hygiene. Where homes, schools and health centres have dirt floors; where water for handwashing is unavailable; and even where families share spaces with domestic animals; maintaining hygiene can be a challenge. What’s more, practicing good hygiene is often perceived as a woman’s responsibility, adding to her burden of care.</p>
+        </div>
+        <div class="section">
+            <h3 id="nutrition-title">Nutrition and Balanced Diet</h3>
+            <p id="nutrition-desc">The Importance of Eating a Balanced Diet for a Healthy Life
+                Balanced Diet Importance Guide
+                What is A Balanced Diet?
+                A balanced diet is a key component of a healthy lifestyle. It refers to consuming a variety of foods in the right proportions to provide your body with the necessary nutrients for optimal health. This ensures that you receive the right blend of vitamins, minerals, proteins, carbohydrates, and fats.
+                
+                The Significance of Calories in A Balanced Diet
+                Calories play a crucial role in a balanced diet. They represent the energy units that fuel our bodies. Balancing calorie intake with expenditure is essential to maintain a healthy weight and support various physiological processes.
+                
+                Importance of Eating a Balanced Diet for a Healthy Life[2]
+                The significance of a balanced diet goes far beyond simply satisfying your taste buds; it's about nurturing your body to ensure long-term well-being. A balanced diet provides the essential nutrients your body requires to function optimally, and it plays a vital role in disease prevention and overall health maintenance.</p>
+        </div>
+        <div class="section">
+            <h3 id="disease-title">Common Disease Prevention</h3>
+            <p id="disease-desc">Vaccination, clean surroundings, and early diagnosis can prevent major illnesses.</p>
+        </div>
+    </div>
+    <script>
+        const languageSelector = document.getElementById('selector');
+        const translations = {
+            en: {
+                title: "Understanding Healthcare Basics for a Healthy Life",
+                description: "Learn the essential healthcare practices to stay healthy and prevent common diseases.",
+                hygieneTitle: "Importance of Hygiene",
+                hygieneDesc: "Good hygiene is critical for preventing the spread of infectious diseases and helping children lead long, healthy lives. It also prevents them from missing school, resulting in better learning outcomes.For families, good hygiene means avoiding illness and spending less on health care. In some contexts, it can also secure a family’s social status and help individuals maintain self-confidence. Yet, important hygiene behaviours are difficult to practice without the right knowledge and skills, adequate community support and the belief that one’s own behaviour can actually make a difference.  Many children around the world live in conditions that make it difficult to maintain good hygiene. Where homes, schools and health centres have dirt floors; where water for handwashing is unavailable; and even where families share spaces with domestic animals; maintaining hygiene can be a challenge. What’s more, practicing good hygiene is often perceived as a woman’s responsibility, adding to her burden of care..",
+                nutritionTitle: "Nutrition and Balanced Diet",
+                nutritionDesc: "The Importance of Eating a Balanced Diet for a Healthy Life Balanced Diet Importance Guide What is A Balanced Diet?A balanced diet is a key component of a healthy lifestyle. It refers to consuming a variety of foods in the right proportions to provide your body with the necessary nutrients for optimal health. This ensures that you receive the right blend of vitamins, minerals, proteins, carbohydrates, and fats.The Significance of Calories in A Balanced Diet Calories play a crucial role in a balanced diet. They represent the energy units that fuel our bodies. Balancing calorie intake with expenditure is essential to maintain a healthy weight and support various physiological processes.Importance of Eating a Balanced Diet for a Healthy Life The significance of a balanced diet goes far beyond simply satisfying your taste buds; it's about nurturing your body to ensure long-term well-being. A balanced diet provides the essential nutrients your body requires to function optimally, and it plays a vital role in disease prevention and overall health maintenance.",
+                diseaseTitle: "Common Disease Prevention",
+                diseaseDesc: "Vaccination, clean surroundings, and early diagnosis can prevent major illnesses."
+            },
+            tu: {
+                title: "ఆరోగ్యకరమైన జీవితం కోసం ప్రాథమిక ఆరోగ్య విద్య",
+                description: "ఆరోగ్యంగా ఉండటానికి మరియు సాధారణ వ్యాధులను నివారించడానికి ప్రాథమిక ఆరోగ్య పద్ధతులను నేర్చుకోండి.",
+                hygieneTitle: "హైజీన్ యొక్క ప్రాముఖ్యత",
+                hygieneDesc: "అంటు వ్యాధుల వ్యాప్తిని నివారించడానికి మరియు పిల్లలు సుదీర్ఘమైన, ఆరోగ్యకరమైన జీవితాలను గడపడంలో సహాయపడటానికి మంచి పరిశుభ్రత కీలకం. ఇది వారిని పాఠశాల తప్పిపోకుండా నిరోధిస్తుంది, ఫలితంగా మెరుగైన అభ్యాస ఫలితాలు లభిస్తాయి. కుటుంబాలకు, మంచి పరిశుభ్రత అంటే అనారోగ్యాన్ని నివారించడం మరియు ఆరోగ్య సంరక్షణపై తక్కువ ఖర్చు చేయడం. కొన్ని సందర్భాల్లో, ఇది కుటుంబం యొక్క సామాజిక స్థితిని కూడా సురక్షితం చేస్తుంది మరియు వ్యక్తులు ఆత్మవిశ్వాసాన్ని కొనసాగించడంలో సహాయపడుతుంది. అయినప్పటికీ, ముఖ్యమైన పరిశుభ్రత ప్రవర్తనలు సరైన జ్ఞానం మరియు నైపుణ్యాలు లేకుండా సాధన చేయడం కష్టం, తగిన సంఘం మద్దతు మరియు ఒకరి స్వంత ప్రవర్తన వాస్తవానికి వైవిధ్యాన్ని కలిగిస్తుందనే నమ్మకం. ప్రపంచవ్యాప్తంగా చాలా మంది పిల్లలు మంచి పరిశుభ్రతను కాపాడుకోవడం కష్టతరమైన పరిస్థితులలో నివసిస్తున్నారు. గృహాలు, పాఠశాలలు మరియు ఆరోగ్య కేంద్రాలు మురికి అంతస్తులను కలిగి ఉన్న చోట; చేతులు కడుక్కోవడానికి నీరు అందుబాటులో లేని చోట; మరియు కుటుంబాలు పెంపుడు జంతువులతో ఖాళీలను పంచుకునే చోట కూడా; పరిశుభ్రతను కాపాడుకోవడం ఒక సవాలుగా ఉంటుంది. ఇంకా ఏమిటంటే, మంచి పరిశుభ్రతను పాటించడం అనేది తరచుగా స్త్రీ యొక్క బాధ్యతగా భావించబడుతుంది, ఆమె సంరక్షణ భారాన్ని పెంచుతుంది.",
+                nutritionTitle: "పోషకాహారం మరియు సమతుల్య ఆహారం",
+                nutritionDesc: "ఆరోగ్యకరమైన జీవితం కోసం సమతుల్య ఆహారం తీసుకోవడం యొక్క ప్రాముఖ్యత సమతుల్య ఆహారం ప్రాముఖ్యత గైడ సమతుల్య ఆహారం అంటే ఏమిటి? సమతుల్య ఆహారం ఆరోగ్యకరమైన జీవనశైలిలో కీలకమైన అంశం. మీ శరీరానికి సరైన ఆరోగ్యానికి అవసరమైన పోషకాలను అందించడానికి సరైన నిష్పత్తిలో వివిధ రకాల ఆహారాలను తీసుకోవడం సూచిస్తుంది. మీరు విటమిన్లు, మినరల్స్, ప్రొటీన్లు, కార్బోహైడ్రేట్లు మరియు కొవ్వుల యొక్క సరైన మిశ్రమాన్ని అందుకునేలా ఇది నిర్ధారిస్తుంది.సమతుల్య ఆహారంలో కేలరీల ప్రాముఖ్యతసమతుల్య ఆహారంలో కేలరీలు కీలక పాత్ర పోషిస్తాయి. అవి మన శరీరానికి ఇంధనం ఇచ్చే శక్తి యూనిట్లను సూచిస్తాయి. ఆరోగ్యకరమైన బరువును నిర్వహించడానికి మరియు వివిధ శారీరక ప్రక్రియలకు మద్దతు ఇవ్వడానికి ఖర్చుతో కూడిన కేలరీల తీసుకోవడం సమతుల్యం. ఆరోగ్యకరమైన జీవితం కోసం సమతుల్య ఆహారం తీసుకోవడం యొక్క ప్రాముఖ్యత సమతుల్య ఆహారం యొక్క ప్రాముఖ్యత మీ రుచి మొగ్గలను సంతృప్తి పరచడం కంటే చాలా ఎక్కువ; ఇది దీర్ఘకాలిక శ్రేయస్సును నిర్ధారించడానికి మీ శరీరాన్ని పోషించడం. సమతుల్య ఆహారం మీ శరీరం సరైన రీతిలో పనిచేయడానికి అవసరమైన పోషకాలను అందిస్తుంది మరియు ఇది వ్యాధి నివారణ మరియు మొత్తం ఆరోగ్య నిర్వహణలో కీలక పాత్ర పోషిస్తుంది.",
+                diseaseTitle: "సాధారణ వ్యాధుల నివారణ",
+                diseaseDesc: "టీకాలు, శుభ్రమైన పరిసరాలు మరియు తొందరగా రోగనిర్ధారణ ప్రధాన వ్యాధులను నివారించగలవు."
+            },
+            hi: {
+                title: "एक स्वस्थ जीवन के लिए बुनियादी स्वास्थ्य शिक्षा",
+                description: "स्वस्थ रहने और सामान्य बीमारियों को रोकने के लिए आवश्यक स्वास्थ्य प्रथाओं को सीखें।",
+                hygieneTitle: "स्वच्छता का महत्व",
+                hygieneDesc: "संक्रामक रोगों के प्रसार को रोकने और बच्चों को लंबे, स्वस्थ जीवन जीने में मदद करने के लिए अच्छी स्वच्छता महत्वपूर्ण है। यह उन्हें स्कूल छोड़ने से भी बचाता है, जिसके परिणामस्वरूप सीखने के बेहतर परिणाम मिलते हैं।परिवारों के लिए, अच्छी स्वच्छता का मतलब बीमारी से बचना और स्वास्थ्य देखभाल पर कम खर्च करना है। कुछ संदर्भों में, यह परिवार की सामाजिक स्थिति को भी सुरक्षित कर सकता है और व्यक्तियों को आत्मविश्वास बनाए रखने में मदद कर सकता है।फिर भी, सही ज्ञान और कौशल, पर्याप्त सामुदायिक समर्थन और इस विश्वास के बिना कि किसी का अपना व्यवहार वास्तव में फर्क ला सकता है, महत्वपूर्ण स्वच्छता व्यवहार का अभ्यास करना मुश्किल है।दुनिया भर में कई बच्चे ऐसी परिस्थितियों में रहते हैं जिससे अच्छी स्वच्छता बनाए रखना मुश्किल हो जाता है। जहां घरों, स्कूलों और स्वास्थ्य केंद्रों के फर्श गंदे हैं; जहां हाथ धोने के लिए पानी उपलब्ध नहीं है; और यहां तक ​​कि जहां परिवार घरेलू जानवरों के साथ स्थान साझा करते हैं; स्वच्छता बनाए रखना एक चुनौती हो सकती है। इसके अलावा, अच्छी स्वच्छता का पालन करना अक्सर एक महिला की जिम्मेदारी के रूप में माना जाता है, जिससे उस पर देखभाल का बोझ बढ़ जाता है।",
+                nutritionTitle: "पोषण और संतुलित आहार",
+                nutritionDesc: "स्वस्थ जीवन के लिए संतुलित आहार खाने का महत्व संतुलित आहार महत्व मार्गदर्शिका संतुलित आहार क्या है? संतुलित आहार स्वस्थ जीवन शैली का एक प्रमुख घटक है। इसका तात्पर्य आपके शरीर को सर्वोत्तम स्वास्थ्य के लिए आवश्यक पोषक तत्व प्रदान करने के लिए सही अनुपात में विभिन्न प्रकार के खाद्य पदार्थों का सेवन करना है। यह सुनिश्चित करता है कि आपको विटामिन, खनिज, प्रोटीन, कार्बोहाइड्रेट और वसा का सही मिश्रण मिले।संतुलित आहार में कैलोरी का महत्व संतुलित आहार में कैलोरी महत्वपूर्ण भूमिका निभाती है। वे हमारे शरीर को ईंधन देने वाली ऊर्जा इकाइयों का प्रतिनिधित्व करते हैं। स्वस्थ वजन बनाए रखने और विभिन्न शारीरिक प्रक्रियाओं का समर्थन करने के लिए व्यय के साथ कैलोरी सेवन को संतुलित करना आवश्यक है। स्वस्थ जीवन के लिए संतुलित आहार खाने का महत्व संतुलित आहार का महत्व केवल आपकी स्वाद कलिकाओं को संतुष्ट करने से कहीं अधिक है; यह दीर्घकालिक कल्याण सुनिश्चित करने के लिए आपके शरीर का पोषण करने के बारे में है। संतुलित आहार आपके शरीर को बेहतर ढंग से कार्य करने के लिए आवश्यक आवश्यक पोषक तत्व प्रदान करता है, और यह बीमारी की रोकथाम और समग्र स्वास्थ्य रखरखाव में महत्वपूर्ण भूमिका निभाता है।",
+                diseaseTitle: "सामान्य बीमारी की रोकथाम",
+                diseaseDesc: "टीकाकरण, स्वच्छ परिवेश और शीघ्र निदान से प्रमुख बीमारियों को रोका जा सकता है।"
+            }
+        };
+        languageSelector.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            document.getElementById('title').textContent = translations[selectedLanguage].title;
+            document.getElementById('description').textContent = translations[selectedLanguage].description;
+            document.getElementById('hygiene-title').textContent = translations[selectedLanguage].hygieneTitle;
+            document.getElementById('hygiene-desc').textContent = translations[selectedLanguage].hygieneDesc;
+            document.getElementById('nutrition-title').textContent = translations[selectedLanguage].nutritionTitle;
+            document.getElementById('nutrition-desc').textContent = translations[selectedLanguage].nutritionDesc;
+            document.getElementById('disease-title').textContent = translations[selectedLanguage].diseaseTitle;
+            document.getElementById('disease-desc').textContent = translations[selectedLanguage].diseaseDesc;
+        });
+    </script>
+</body>
+</html>

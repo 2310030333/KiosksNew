@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHealth Kiosk</title> 
+    <link rel="icon" href="{{ url_for('static', filename='plusymbol.png') }}" type="image/x-icon">
+    <style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    font-style: color;
+    background-image: url("{{ url_for('static', filename='background1.jpg') }}"), linear-gradient(135deg, rgba(0, 180, 216, 0) 0%, rgba(0, 99, 160, 0.7) 100%); /* Gradient with transparency */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    color: #fff;
+    transition: background 0.5s ease-in-out;
+}
+
+
+
+
+        #menucolor {
+            background-color: #0063a0;
+            width: 100%;
+            height: auto;
+            position: sticky;
+            top: 0;
+            padding: 35px 10px;
+            text-align: center;
+            margin-top: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        #selector {
+            font-size: 1.2em;
+            padding: 5px;
+            background-color: #fff;
+            border: none;
+            color: #0063a0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #selector:hover {
+            background-color: #0063a0;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        #welcomepage {
+            text-align: center;
+            position: relative;
+            top: 50px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        #title {
+            color: #fff;
+            font-size: 3em;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+            animation: slideUp 1.5s ease-out;
+        }
+
+        #tagline {
+            color: #fff;
+            font-size: 1.5em;
+            letter-spacing: 5px;
+            margin-top: 10px;
+            animation: slideUp 2s ease-out;
+        }
+
+        #continue {
+            background-color: #01C5A2;
+            color: white;
+            border-style: none;
+            padding: 14px 35px;
+            font-size: 1.5em;
+            margin-top: 30px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #continue:hover {
+            background-color: #016F4D;
+            transform: translateY(-3px);
+        }
+
+        #sound {
+            position: fixed;
+            width: 50px;
+            top: 10px;
+            left: 90%;
+            transform: translateX(-100%);
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #sound:hover {
+            background-color: #868686;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            #welcomepage {
+                top: 20px;
+            }
+
+            #title {
+                font-size: 2em;
+            }
+
+            #tagline {
+                font-size: 1.3em;
+                letter-spacing: 3px;
+            }
+
+            #continue {
+                padding: 12px 25px;
+                font-size: 1.2em;
+            }
+
+            #sound {
+                left: 90%;
+                top: 15px;
+            }
+
+            #selector {
+                font-size: 1em;
+                position: fixed;
+                left: 80%;
+                top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #title {
+                font-size: 1.5em;
+            }
+
+            #tagline {
+                font-size: 1.1em;
+            }
+
+            #continue {
+                padding: 10px 15px;
+                font-size: 1.1em;
+            }
+
+            #sound {
+                left: 85%;
+                top: 10px;
+            }
+
+            #selector {
+                font-size: 0.9em;
+                position: fixed;
+                left: 70%;
+                top: 20px;
+            }
+        }
+
+        /* Keyframe animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="menucolor">
+        <select id="selector" style="color: black; position: absolute; top: 20px; right: 45px;">
+            <option value="en">English</option>
+            <option value="tu">తెలుగు</option>
+            <option value="hi">हिंदी</option>
+        </select>
+    </div>
+    <div id="backgroundimage">
+        <div id="welcomepage">
+            <h1 id="title" style="color: #0063a0;">WELCOME TO MYHEALTH KIOSK!</h1>
+            <h4 id="tagline" style="color: #0063a0;">Promoting A Healthy Life For Everyone!</h4>
+            <h5 style="color: #0063a0;">24/7</h5>
+            <a href="{{ url_for('login2') }}">
+                <button id="continue"> 
+                    TOUCH TO CONTINUE
+                </button>
+            </a>
+        </div>
+        <audio id="audio-play" muted>
+            <source src="{{ url_for('static', filename='welcomesound.mp3') }}" type="audio/mp3">
+        </audio>
+        <img style="color: white; width: 41px; position: fixed; top: 16px; left: 30px;" src="{{ url_for('static', filename='plusymbol.png') }}">
+        <!-- Play button for user interaction to trigger audio -->
+        <img id="sound" src="{{ url_for('static', filename='volume.png') }}" onClick="playAudio();" alt="Play sound">
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio-play');
+        
+        // Unmute and play audio when the page loads, if autoplay is allowed
+        window.addEventListener('load', () => {
+            audio.muted = false;
+            audio.play().catch(error => {
+                console.log("Autoplay was prevented. Waiting for user interaction.");
+            });
+        });
+
+        // Function to play audio on user interaction
+        function playAudio() {
+            audio.muted = false;
+            audio.play();
+        }
+
+        // Language change functionality
+        const languageSelector = document.getElementById('selector');
+        const titleElement = document.getElementById('title');
+        const continueElement = document.getElementById('continue');
+        const taglineElement = document.getElementById('tagline');
+
+        languageSelector.addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            if (selectedLanguage === 'en') {
+                titleElement.textContent = 'WELCOME TO MYHEALTH KIOSK!';
+                taglineElement.textContent = 'Promoting A Healthy Life For Everyone!';
+                continueElement.textContent = 'TOUCH TO CONTINUE';
+            } else if (selectedLanguage === 'tu') {
+                titleElement.textContent = 'మైహెల్త్ కియోస్క్‌కి స్వాగతం!';
+                taglineElement.textContent = 'ప్రతి ఒక్కరికీ ఆరోగ్యకరమైన జీవితాన్ని ప్రోత్సహిస్తోంది!';
+                continueElement.textContent = 'కొనసాగించడానికి తాకండి';
+            } else if (selectedLanguage === 'hi') {
+                titleElement.textContent = 'मायहेल्थ कियोस्क में आपका स्वागत है!';
+                taglineElement.textContent = 'हर किसी के लिए स्वस्थ जीवन को बढ़ावा देना!';
+                continueElement.textContent = 'जारी रखने के लिए स्पर्श करें';
+            }
+        });
+    </script>
+</body>
+</html>
